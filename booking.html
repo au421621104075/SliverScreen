@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(to right bottom, rgba(61, 60, 60, 0), #a8a6a6, #000);
+            padding: 20px;
+            flex-grow: 1;
+            margin-top: 45px;
+        }
+        .fixed {
+            position: fixed;
+            top: 0;
+            background-color: #222;
+            width: 100%;
+            height: 47px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            margin: 2px;
+        }
+        .fixed .fixed_logo {
+            display: flex;
+            justify-content: space-between;
+        }
+        .fixed .fixed_logo .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 30px;
+            letter-spacing: 2.5px;
+            margin-left: 15px;
+        }
+        .fixed .fixed_logo .open_btn {
+            background-color: #222;
+            width: 100%;
+            border-radius: 50px;
+            padding: 10px;
+            margin-left: 8px;
+            border: none;
+            height: 1px;
+            margin-top: 1px;
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .fixed .fixed_logo .open_btn:hover {
+            transform: translate(-2px);
+        }
+        .fixed .fixed_a {
+            display: flex;
+        }
+        .fixed a {
+            text-decoration: none;
+            color: white;
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 25px;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #f1c40f;
+        }
+        /* Seat booking section */
+        .seating {
+            max-width: 1000px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            width: 90%;
+            margin: 20px;
+            transition: all 0.3s ease;
+        }
+        .seating h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .screen {
+            background-color: #333;
+            color: white;
+            font-size: 1.3rem;
+            padding: 12px 20px;
+            border-radius: 30px 30px 0 0;
+            box-shadow: 0 20px 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+        .seats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        .seating:hover{
+            box-shadow :2px 4px 10px 4px #d59225 ;
+        }
+        .seat {
+            width: 35px;
+            height: 35px;
+            background-color: #7f7474;
+            border: 1px solid #000000;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .seat:hover {
+            transform: scale(1.1);
+            background-color: #bbb;
+        }
+        .seat.selected {
+            background-color: #f39c12;
+            border: 1px solid #000000;
+            color: white;
+            font-weight: bold;
+        }
+        .seat.booked {
+            background-color: #555;
+            border: 1px solid #000000;
+            cursor: not-allowed;
+        }
+        /* Booking button styling */
+        .details-btn {
+            font-size: 1.2rem;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            width: 2px;
+            transition: all 2s ease;
+            text-align: center;
+            background-color: #f39c12;
+            color: rgb(5, 4, 4);
+        }
+        .details-btn:hover {
+            background-color: #f39c12;
+            transform: translateY(-2px);
+            width: 150px;
+        }
+        /* Legend for seat colors */
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        .legend-item .legend-box {
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+        }
+        .legend-item .available {
+            background-color: #ccc;
+            border: 1px solid #000000;
+        }
+        .legend-item .selected {
+            background-color: #f39c12;
+            border: 1px solid #000000;
+        }
+        .legend-item .booked {
+            background-color: #555;
+            border: 1px solid #000000;
+        }
+        /* Footer styling */
+        footer {
+            background: #222;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
+        /* Sidebar Styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #423a3a;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.2s;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+        .sidebar .close_btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            background-color: #423a3a;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .content_area {
+            margin-left: 0;
+            transition: margin-left 0.8s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="mySidebar">
+        <button class="close_btn" onclick="toggleSidebar()">X</button>
+        <a href="index.html">Home</a>
+        <a href="index.html">Contact</a>
+        <a href="movie-details.html">Movie Details</a>
+        <a href="#">Ticket Booking</a>
+    </div>
+    <div class="content_area">
+        <header>
+            <div class="fixed">
+                <div class="fixed_logo">
+                    <button class="open_btn" onclick="toggleSidebar()">☰ Open</button>
+                    <div class="logo">SliverScreen</div>
+                </div>
+                <div class="fixed_a">
+                    <a href="index.html">Home</a>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section class="seating">
+                <h1>Choose Your Seats</h1>
+                <div class="screen">Screen</div>
+                <div class="seats">
+                    <!-- Dynamic seat layout -->
+                </div>
+                <button class="details-btn">Confirmation</button>
+            </section>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-box available"></div>
+                    <span>Available</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box selected"></div>
+                    <span>Selected</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box booked"></div>
+                    <span>Booked</span>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <p>&copy; 2024 SliverScreen. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+            function toggleSidebar() {
+                const sidebar = document.getElementById('mySidebar');
+                const mainContent = document.querySelector('.content_area');
+                if (sidebar.style.width === '200px') {
+                    sidebar.style.width = '0';
+                    mainContent.style.marginLeft = '0';
+                } else {
+                    sidebar.style.width = '200px';
+                    mainContent.style.marginLeft = '200px';
+                }
+            }
+            var seats = document.querySelector(".seats")
+            var detailsbtn = document.querySelector(".details-btn")
+            //add more seats
+            for (i = 0; i < 99; i++) {
+                var seat = document.createElement("div")
+                seat.className = "seat"
+                seats.appendChild(seat)
+            }
+            //seat selected
+            var seat_arr = document.querySelectorAll('.seat')
+            seat_arr.forEach(s => {
+                s.addEventListener("click", () => {
+                    if (!s.classList.contains('booked')) {
+                        s.classList.toggle('selected');
+                    }
+                })
+            });
+            //count the selected seat
+            detailsbtn.addEventListener('click', () => {
+                const selectedSeats = document.querySelectorAll('.seat.selected');
+                if (selectedSeats.length > 0) {
+                    alert(`You have selected seats: ${selectedSeats.length}. Confirm booking?`)
+                    // Change selected seats to booked
+                    if (detailsbtn) {
+                        selectedSeats.forEach(seat => {
+                            seat.classList.remove('selected', 'available');
+                            seat.classList.add('booked');
+                        });
+                    }
+                    alert('Booking Confirmed! Seats are now booked.');
+                }
+                else {
+                    alert('Please select at least one seat to book.');
+                }
+            });
+    </script>
+</body>
+
+</html>

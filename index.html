@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SliverScreen Booking- Home</title>
+    <style>
+        html {
+            margin: 0;
+            border: 0;
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .fixed {
+            position: fixed;
+            top: 0;
+            background-color: #222;
+            width: 100%;
+            height: 47px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            margin: 2px;
+        }
+        .fixed .fixed_logo {
+            display: flex;
+            justify-content: space-between;
+        }
+        .fixed .fixed_logo .logo {
+            color: white;
+            font-weight: bold;
+            font-size: 30px;
+            letter-spacing: 2.5px;
+            margin-left: 15px;
+        }
+        .fixed .fixed_logo .open_btn {
+            background-color: #222;
+            width: 100%;
+            border-radius: 50px;
+            padding: 10px;
+            margin-left: 8px;
+            border: none;
+            height: 1px;
+            margin-top: 1px;
+            text-transform: uppercase;
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+           transition: all 0.3s ease;
+        }
+        .fixed .fixed_logo .open_btn:hover {
+            transform: translate(-2px);
+        }
+        .fixed .fixed_a {
+            display: flex;
+        }
+        .fixed a {
+            text-decoration: none;
+            color: white;
+            text-transform: uppercase;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 25px;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #f1c40f;
+        }
+        main {
+            margin-top: 48px;
+            padding-top: 0;
+        }
+        /* Movie List Section */
+        .movie-list {
+            padding: 20px;
+            border: 2px solid #000;
+            margin: 20px;
+            background-image: linear-gradient(to right bottom, rgba(61, 60, 60, 0), rgb(168, 166, 166), rgb(0, 0, 0), rgb(0, 0, 0));
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        .movie-list h1 {
+            color: #000;
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #140e0e;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .movies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .movie-card {
+            background: rgb(0, 0, 0);
+            border-radius: 10px;
+            width: 220px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 0.5px solid #7d7a7a;
+            margin: 10px;
+            cursor: pointer;
+            background-color: #333;
+            color: #fff;
+        }
+        .movie-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+        .movie-card img {
+            max-width: 100%;
+            border-radius: 10px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .movie-card h2 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        .movie-card p {
+            font-size: 1rem;
+            margin: 5px 0;
+            color: #f39c12;
+        }
+        .details-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #f39c12;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 2s ease;
+            text-align: center;
+            width: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .details-btn:hover {
+            background-color: #f39c12;
+            transform: translateY(-3px);
+            width: 150px;
+        }
+        /* Contact Section Styles */
+        .contact-section {
+            padding: 8px 15px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        .contact-section h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        .contact-section p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: left;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .contact-form label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: #fafafa;
+            position: relative;
+            right: 13px;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: #000000;
+            outline: none;
+        }
+        .submit-btn {
+            display: inline-block;
+            background-color: #333;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #f39c12;
+            transform: translateY(-3px);
+        }
+        /* Footer Styles */
+        footer {
+            padding: 20px;
+            background-color: #222;
+            color: white;
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+            color: #ccc;
+        }
+        /* Sidebar Styles */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #423a3a;
+            overflow-x: hidden;
+            transition: 0.3s;
+            padding-top: 60px;
+        }
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: 0.2s;
+        }
+        .sidebar a:hover {
+            background-color: #575757;
+        }
+        .sidebar .close_btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 20px;
+            background-color: #423a3a;
+            ;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .content_area {
+            margin-left: 0;
+            transition: margin-left 0.8s;
+        }
+        /* Slideshow Container */
+        .slideshow-gallery {
+            padding: 20px;
+            padding-top: 1px;
+            border: 1px solid #000;
+            margin: auto;
+            height: 250px;
+            position: relative;
+            max-width: 1000px;
+            border-radius:0px 0px 50px 50px;
+            box-shadow: 0px 2px 8px 2px#000;
+        }
+        /* Slide */
+        .slide {
+            display: none;
+            text-align: center;
+            margin: 0%;
+        }
+        .slideshow-container {
+            margin: 0%;
+        }
+        .slide img {
+            width: 100%;
+            height: 250px;
+            object-fit: fill;
+             border-radius:0px 0px 50px 50px;
+            box-shadow: 0px 2px 8px 2px#000;
+        }
+        /* Prev & Next Buttons */
+        .prev {
+            cursor: pointer;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            font-size: 20px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 50%;
+            position: absolute;
+            left: 7px;
+            top: 40%;
+        }
+        .prev:hover {
+            text-decoration: none;
+        }
+        .next {
+            cursor: pointer;
+            margin-right: 3px;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            font-size: 20px;
+            text-decoration: none;
+            z-index: 100;
+            border-radius: 50%;
+            position: absolute;
+            right: 0;
+            top: 40%;
+        }
+        .next:hover {
+            text-decoration: none;
+        }
+    /* Chatbot Styles */
+.chatbot {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+}
+.chatbot-header {
+    background-color: #f39c12;
+    color: white;
+    padding: 10px;
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px 10px 0 0;
+}
+.chatbot-messages {
+    padding: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    flex-grow: 1;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.chatbot-messages .bot-message {
+    background-color: #e8e8e8;
+    padding: 8px 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+.chatbot-messages .user-message {
+    background-color: #f39c12;
+    color: white;
+    padding: 8px 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: right;
+}
+.chatbot-input {
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+.chatbot-input input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.chatbot-input button {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.chatbot-input button:hover {
+    background-color: #d98209;
+}
+.chatbot-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="mySidebar">
+        <button class="close_btn" onclick="toggleSidebar()">X</button>
+        <a href="#">Home</a>
+        <a href="#movies">movies</a>
+        <a href="#contact">Contact</a>
+        <a href="movie-details.html">Movie Details</a>
+        <a href="booking.html" target="_blank">Ticket Booking</a>
+    </div>
+    <div class="content_area">
+        <header>
+            <div class="fixed">
+                <div class="fixed_logo">
+                    <button class="open_btn" onclick="toggleSidebar()">☰ Open</button>
+                    <div class="logo">SliverScreen</div>
+                </div>
+                <div class="fixed_a">
+                    <a href="#">Home</a>
+                    <a href="#movies">movies</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <!-- Slideshow Gallery -->
+            <section class="slideshow-gallery">
+                <div class="slideshow-container" id="slideshow-container">
+                    <!-- Slides will be added dynamically via JavaScript -->
+                </div>
+                <div class="slide_btn">
+                    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+                    <a class="next" onclick="changeSlide(1)">&#10095;</a>
+                </div>
+            </section>
+            <section class="movie-list" id="movies">
+                <h1>Now Showing</h1>
+                <div class="movies">
+                    <!-- Movies will be dynamically added here -->
+                </div>
+            </section>
+
+
+
+            <!-- Contact Section -->
+            <section id="contact" class="contact-section">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you! Reach out to us for any questions, feedback, or support.</p>
+
+                <form action="#" method="POST" class="contact-form">
+                    <label>Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+
+                    <label>Your Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+
+                    <label>Your Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Enter your message" required></textarea>
+
+                    <button class="submit-btn">Send Message</button>
+                </form>
+            </section>
+        </main>
+<div class="chatbot">
+    <div class="chatbot-header">
+        <span>Chatbot Assistant</span>
+        <button class="chatbot-close-btn" onclick="toggleChatbot()">✖</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages">
+        <div class="bot-message">
+            Hi there! How can I assist you today?
+        </div>
+    </div>
+    <div class="chatbot-input">
+        <input type="text" id="chatbotInput" placeholder="Type your message here..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+<button class="chatbot-toggle" onclick="toggleChatbot()">💬 Chat</button>
+        <footer>
+            <p>&copy; 2024 SliverScreen. All rights reserved.</p>
+        </footer>
+    </div>
+    <script>
+    function toggleChatbot() {
+        const chatbot = document.querySelector('.chatbot');
+        const toggleButton = document.querySelector('.chatbot-toggle');
+        const messages = document.getElementById('chatbotMessages');
+
+        if (chatbot.style.display === 'flex') {
+            chatbot.style.display = 'none';
+            toggleButton.style.display = 'block';
+        } else {
+            chatbot.style.display = 'flex';
+            toggleButton.style.display = 'none';
+
+            // Add a greeting message only if it's the first time opening
+            if (!messages.dataset.greeted) {
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.className = 'bot-message';
+                botMessageDiv.textContent = getGreetingMessage();
+                messages.appendChild(botMessageDiv);
+
+                // Mark as greeted
+                messages.dataset.greeted = true;
+            }
+        }
+    }
+
+    function getGreetingMessage() {
+        const now = new Date();
+        const hours = now.getHours();
+
+        if (hours < 12) {
+            return 'Good morning! How can I assist you today?';
+        } else if (hours < 18) {
+            return 'Good afternoon! How can I help you?';
+        } else {
+            return 'Good evening! What can I do for you today?';
+        }
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('chatbotInput');
+        const messages = document.getElementById('chatbotMessages');
+        const userMessage = input.value.trim();
+
+        if (userMessage) {
+            // Add user message
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'user-message';
+            userMessageDiv.textContent = userMessage;
+            messages.appendChild(userMessageDiv);
+
+            // Scroll to the latest message
+            messages.scrollTop = messages.scrollHeight;
+
+            // Bot's response
+            setTimeout(() => {
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.className = 'bot-message';
+
+                // Handle greeting queries
+                if (/good\s?morning/i.test(userMessage)) {
+                    botMessageDiv.textContent = 'Good morning! I hope you have a wonderful day!';
+                } else if (/good\s?afternoon/i.test(userMessage)) {
+                    botMessageDiv.textContent = 'Good afternoon! How’s your day going so far?';
+                } else if (/good\s?evening/i.test(userMessage)) {
+                    botMessageDiv.textContent = 'Good evening! How can I assist you tonight?';
+                } else if (/hello|hi|hey/i.test(userMessage)) {
+                    botMessageDiv.textContent = 'Hello! How can I help you today?';
+
+                    // Handle booking queries
+                } else if (userMessage.toLowerCase().includes('cancel') || userMessage.toLowerCase().includes('cancel my booking') || userMessage.toLowerCase().includes('cancel my ticket')) {
+                    botMessageDiv.textContent = 'To cancel your booking, please provide your booking reference number or contact our support team directly for assistance.';
+                    // Handle other queries
+                } else if (userMessage.toLowerCase().includes('index')) {
+                    botMessageDiv.textContent = 'You can explore the home page for general updates.';
+                } else if (userMessage.toLowerCase().includes('movie')) {
+                    botMessageDiv.textContent = 'Check out the movie details section for the latest movies.';
+                } else if (userMessage.toLowerCase().includes('book')) {
+                    botMessageDiv.textContent = 'You can book your tickets in the ticket booking section.';
+                } else {
+                    botMessageDiv.textContent = 'Sorry, I didn’t quite understand that. Please ask something else!';
+                }
+
+                messages.appendChild(botMessageDiv);
+                messages.scrollTop = messages.scrollHeight;
+            }, 1000);
+
+            input.value = ''; // Clear input
+        }
+    }
+        function toggleSidebar() {
+            const sidebar = document.getElementById('mySidebar');
+            const mainContent = document.querySelector('.content_area');
+
+            if (sidebar.style.width === '200px') {
+                sidebar.style.width = '0';
+                mainContent.style.marginLeft = '0';
+            } else {
+                sidebar.style.width = '200px';
+                mainContent.style.marginLeft = '200px';
+            }
+        }
+        // Sample movie data
+        const movieData = [
+            {
+                title: "Loki",
+                rating: 5,
+                genre: "Sci-Fi,Fantasy",
+                poster: "../images/loki.webp",
+                details: "movie-details.html",
+            },
+            {
+                title: "The Dark Knight",
+                rating: 2,
+                genre: "Action",
+                poster: "../images/dark-knight.jpg",
+                details: "movie-details.html",
+            },
+            {
+                title: "Inception",
+                rating: 4,
+                genre: "Sci-Fi",
+                poster: "../images/inception.jpg",
+                details: "movie-details.html",
+            },
+            {
+                title: "Interstellar",
+                rating: 4,
+                genre: "Sci-Fi",
+                poster: "../images/interstellar.jpg",
+                details: "movie-details.html",
+            },
+            {
+                title: "Alvin",
+                rating: 4,
+                genre: "Comedy,Animation",
+                poster: "../images/alvin.jpg",
+                details: "movie-details.html",
+            },
+        ];
+
+        // Dynamically add movies to the homepage
+        document.addEventListener("DOMContentLoaded", () => {
+            const movies = document.querySelector(".movies");
+
+            movieData.forEach((movie) => {
+                const movieCard = document.createElement("div");
+                movieCard.className = "movie-card";
+
+                movieCard.innerHTML = `
+        <a href="${movie.details}">
+            <img src="${movie.poster}" alt="${movie.title}">
+        </a>
+        <h2>${movie.title}</h2>
+        <p>Rating: ${"★".repeat(movie.rating)}${"☆".repeat(5 - movie.rating)}</p>
+        <p>Genre: ${movie.genre}</p>
+        <a href="${movie.details}" class="details-btn">Details</a>
+    `;
+                movies.appendChild(movieCard);
+            });
+        });
+        //slider
+        // Slideshow Logic
+        let currentSlideIndex = 0;
+        const slides = [
+            "../images/loki.webp",
+            "../images/alvin.jpg",
+            "../images/dark-knight.jpg",
+            "../images/inception.jpg",
+            "../images/interstellar.jpg"
+        ];
+        const slideshowContainer = document.getElementById('slideshow-container');
+        function createSlides() {
+            slides.forEach((slide, index) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.classList.add('slide');
+                if (index === currentSlideIndex) {
+                    slideDiv.style.display = 'block';  // Show first slide
+                }
+                const img = document.createElement('img');
+                img.src = slide;
+                slideDiv.appendChild(img);
+                slideshowContainer.appendChild(slideDiv);
+            });
+        }
+        function changeSlide(n) {
+            const allSlides = document.querySelectorAll('.slide');
+            allSlides[currentSlideIndex].style.display = 'none'; // Hide the current slide
+            currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length; // Change the slide index
+            allSlides[currentSlideIndex].style.display = 'block'; // Show the new slide
+        }
+        // Initialize the slideshow on page load
+        createSlides();
+        // Sidebar Toggle Logic
+        function openSidebar() {
+            document.querySelector('.sidebar').style.width = '250px';
+            document.querySelector('.content_area').style.marginLeft = '250px';
+        }
+        function closeSidebar() {
+            document.querySelector('.sidebar').style.width = '0';
+            document.querySelector('.content_area').style.marginLeft = '0';
+        }
+        // Event Listeners for Sidebar and Slideshow Navigation
+        document.querySelector('.prev').addEventListener('click', () => changeSlide(-1));
+        document.querySelector('.next').addEventListener('click', () => changeSlide(1));
+        document.querySelector('.sidebar .close_btn').addEventListener('click', closeSidebar);
+        // Form validation for the contact form
+        const contactForm = document.querySelector(".contact-form");
+        if (contactForm) {
+            contactForm.addEventListener("submit", function (event) {
+                event.preventDefault(); // Prevent form submission for now
+                const name = document.getElementById("name");
+                const email = document.getElementById("email");
+                const message = document.getElementById("message");
+                if (!validateEmail(email.value.trim())) {
+                    alert("Please enter a valid email address.");
+                    return;
+                }
+                alert("Thank you for contacting us! We'll get back to you soon.");
+                contactForm.reset();
+            });
+        }
+        // Email validation function
+        function validateEmail(email) {
+            const emailPattern =
+                /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailPattern.test(email);
+        }
+    </script>
+</body>
+</html>
